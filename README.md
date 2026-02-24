@@ -13,7 +13,7 @@ This project was created to practice basic game logic, keyboard controls, and DO
 ## 🛠️ Technologies Used
 - HTML5
 - CSS3
-- Vanilla JavaScript
+- JavaScript
 
 ## ✨ Features
 - Responsive game board
