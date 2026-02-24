@@ -1,25 +1,21 @@
-<!DOCTYPE html>
-<html>
 
+---
+
+## 📄 index.html
+```html
+<!DOCTYPE html>
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Snake Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div id="gameContainer">
-        <div id="info">
-            <div>Puan: <span id="score">0</span></div>
-            <div>Hız: <span id="speed">1</span></div>
-            <div style="font-size: 12px; margin-top: 10px;">Dokunarak/Ok tuşları ile yön değiştirin</div>
-        </div>
-        <canvas id="game"></canvas>
-        <div id="popupContainer"></div>
-        <div id="gameOverText">tekrar dene<br>gadaşım</div>
-    </div>
-    <script src="script.js"></script>
-</body>
 
+<h1>🐍 Snake Game</h1>
+<canvas id="game" width="400" height="400"></canvas>
+<p>Skor: <span id="score">0</span></p>
+
+<script src="script.js"></script>
+</body>
 </html>
