@@ -1,59 +1,81 @@
-// Ensure the canvas resizes responsively
-function resizeCanvas() {
-    const canvas = document.getElementById('gameCanvas');
-    canvas.width = window.innerWidth;  // Set width based on window width
-    canvas.height = window.innerHeight; // Set height based on window height
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+const box = 20;
+let score = 0;
+
+let snake = [];
+snake[0] = { x: 9 * box, y: 10 * box };
+
+let food = {
+    x: Math.floor(Math.random() * 19 + 1) * box,
+    y: Math.floor(Math.random() * 19 + 1) * box
+};
+
+let direction;
+
+document.addEventListener("keydown", changeDirection);
+
+function changeDirection(event) {
+    if (event.keyCode === 37 && direction !== "RIGHT") direction = "LEFT";
+    else if (event.keyCode === 38 && direction !== "DOWN") direction = "UP";
+    else if (event.keyCode === 39 && direction !== "LEFT") direction = "RIGHT";
+    else if (event.keyCode === 40 && direction !== "UP") direction = "DOWN";
 }
 
-// Listen for touch events for swipe detection
-let touchStartX = null;
-let touchStartY = null;
+function collision(head, array) {
+    for (let i = 0; i < array.length; i++) {
+        if (head.x === array[i].x && head.y === array[i].y) {
+            return true;
+        }
+    }
+    return false;
+}
 
-document.addEventListener('touchstart', function(e) {
-    const touch = e.touches[0];
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
-});
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-document.addEventListener('touchend', function(e) {
-    if (touchStartX === null || touchStartY === null) {
-        return;
+    for (let i = 0; i < snake.length; i++) {
+        ctx.fillStyle = i === 0 ? "lime" : "green";
+        ctx.fillRect(snake[i].x, snake[i].y, box, box);
     }
 
-    const touch = e.changedTouches[0];
-    const deltaX = touch.clientX - touchStartX;
-    const deltaY = touch.clientY - touchStartY;
+    ctx.fillStyle = "red";
+    ctx.fillRect(food.x, food.y, box, box);
 
-    // Determine swipe direction
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (deltaX > 0) {
-            // Swiped right
-            game.snake.moveRight();
-        } else {
-            // Swiped left
-            game.snake.moveLeft();
-        }
+    let snakeX = snake[0].x;
+    let snakeY = snake[0].y;
+
+    if (direction === "LEFT") snakeX -= box;
+    if (direction === "UP") snakeY -= box;
+    if (direction === "RIGHT") snakeX += box;
+    if (direction === "DOWN") snakeY += box;
+
+    if (snakeX === food.x && snakeY === food.y) {
+        score++;
+        document.getElementById("score").innerText = score;
+        food = {
+            x: Math.floor(Math.random() * 19 + 1) * box,
+            y: Math.floor(Math.random() * 19 + 1) * box
+        };
     } else {
-        if (deltaY > 0) {
-            // Swiped down
-            game.snake.moveDown();
-        } else {
-            // Swiped up
-            game.snake.moveUp();
-        }
+        snake.pop();
     }
 
-    touchStartX = null;
-    touchStartY = null; // Reset touch points
-});
+    let newHead = { x: snakeX, y: snakeY };
 
-// Restart game on mobile tap
-document.addEventListener('click', function(e) {
-    if (game.isOver) {
-        game.restart(); // Restart game if it's over
+    if (
+        snakeX < 0 ||
+        snakeY < 0 ||
+        snakeX >= canvas.width ||
+        snakeY >= canvas.height ||
+        collision(newHead, snake)
+    ) {
+        clearInterval(game);
+        alert("Oyun Bitti! Skor: " + score);
     }
-});
 
-// We call resizeCanvas initially to set the correct size at the start
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas); // Call on window resize
+    snake.unshift(newHead);
+}
+
+let game = setInterval(draw, 120);
