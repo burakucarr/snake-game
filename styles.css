@@ -2,6 +2,8 @@ html,
 body {
     height: 100%;
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -9,26 +11,42 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+#gameContainer {
+    position: relative;
+    width: 90vmin;
+    height: 90vmin;
+    max-width: 90vw;
+    max-height: 90vh;
 }
 
 canvas {
-    border: 1px solid white;
+    border: 2px solid white;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: black;
 }
 
 #info {
     position: absolute;
-    bottom: 30px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     color: white;
     font-family: Arial, sans-serif;
-    font-size: 18px;
+    font-size: clamp(12px, 4vw, 18px);
     text-align: center;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 15px 30px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: clamp(10px, 3vw, 15px) clamp(15px, 5vw, 30px);
     border-radius: 10px;
     border: 2px solid #FFD700;
     z-index: 500;
+    white-space: nowrap;
 }
 
 @keyframes popScore {
@@ -46,7 +64,7 @@ canvas {
 .score-popup {
     position: absolute;
     font-weight: bold;
-    font-size: 24px;
+    font-size: clamp(18px, 5vw, 24px);
     color: #FFD700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     pointer-events: none;
@@ -94,7 +112,7 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 48px;
+    font-size: clamp(32px, 12vw, 48px);
     font-weight: bold;
     color: #FF1744;
     text-shadow: 0 0 10px #FF1744;
@@ -109,4 +127,48 @@ canvas {
 
 #gameOverText.show {
     display: block;
+}
+
+/* Tablet ve daha küçük ekranlar için */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    #gameContainer {
+        width: 95vmin;
+        height: 95vmin;
+    }
+
+    #info {
+        bottom: 15px;
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    canvas {
+        border: 2px solid white;
+    }
+}
+
+/* Çok küçük ekranlar için */
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    #gameContainer {
+        width: 95vmin;
+        height: 95vmin;
+    }
+
+    #info {
+        bottom: 10px;
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+
+    #gameOverText {
+        font-size: 28px;
+    }
 }
