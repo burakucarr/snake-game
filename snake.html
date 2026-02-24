@@ -2,20 +2,23 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Snake Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div id="info">
-        <div>Puan: <span id="score">0</span></div>
-        <div>Hız: <span id="speed">1</span></div>
-        <div style="font-size: 12px; margin-top: 10px;">+/- tuşları ile hızı ayarlayın</div>
+    <div id="gameContainer">
+        <div id="info">
+            <div>Puan: <span id="score">0</span></div>
+            <div>Hız: <span id="speed">1</span></div>
+            <div style="font-size: 12px; margin-top: 10px;">Dokunarak/Ok tuşları ile yön değiştirin</div>
+        </div>
+        <canvas id="game"></canvas>
+        <div id="popupContainer"></div>
+        <div id="gameOverText">tekrar dene<br>gadaşım</div>
     </div>
-    <canvas width="400" height="400" id="game"></canvas>
-    <div id="popupContainer"
-        style="position: absolute; top: 0; left: 0; width: 400px; height: 400px; pointer-events: none;"></div>
-    <div id="gameOverText">tekrar dene<br>gadaşım</div>
     <script src="script.js"></script>
 </body>
 
